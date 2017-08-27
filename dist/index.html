@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+
+<head>
+    <title>AngularJS: UI-Router Quick Start</title>
+    <!-- Bootstrap CSS -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand" href="#">Innovify</a>
+      <ul class="nav">
+        <li><a ui-sref="route1">Route 1</a></li>
+        <li><a ui-sref="route2">Route 2</a></li>
+        <li><a ui-sref="internationalization">Localization</a></li>
+        <li><a ui-sref="fetch">Service</a></li>
+        <li><a ui-sref="validation">Validation</a></li>
+        <li><a ui-sref="about">About</a></li>       
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <div class="well" ui-view></div>        
+    </div>
+  </div>         
+  
+  <!-- Angular -->
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.js"></script>
+ 
+  <!-- UI-Router -->
+  <script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+
+  <!-- Angular Translator -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.15.2/angular-translate.js"></script>
+
+  <!-- Intenational locate lib Angular -->
+  <script src="https://code.angularjs.org/1.2.9/i18n/angular-locale_de-de.js"></script>
+  
+  <!-- App Script -->
+  
+ <script>
+    var myapp = angular.module('myapp', ["ui.router","pascalprecht.translate"])
+    myapp.config(function($stateProvider, $urlRouterProvider,$translateProvider){
+   
+      // For any unmatched url, send to /route1
+      $urlRouterProvider.otherwise("/route1")
+      
+      $stateProvider
+        .state('route1', {
+            url: "/route1",
+            templateUrl: "views/route1.html",
+            controller:function($scope){
+              console.log('Enterd In Route1 !');
+            }
+         })
+          
+          .state('route1.list', {
+              url: "/list",
+              templateUrl: "views/route1.list.html",
+              controller: function($scope){
+                console.log('Ropute1..........');
+                $scope.items = ["A", "List", "Of", "Items"];
+              }
+          })
+          
+        .state('route2', {
+            url: "/route2",
+            templateUrl: "views/route2.html",
+              controller:function($scope){
+              console.log('Entered in Route2 Applciation.... !');
+            }
+         })
+
+
+
+        .state('about',{
+            url:'/about',
+            templateUrl:'views/about.html',
+             controller:function($scope){
+              console.log('About The Web applcaition......... !');
+              $scope.message= "hellow chetan!";
+            }
+        })
+        
+        .state('fetch',{
+            url:'/fetch',
+            templateUrl:'views/fetch.html',
+            controller:function FetchCtrl($scope, $http) {
+              console.log("fetch button Pfressed!!");
+            $scope.method = 'GET';
+            $scope.url = 'views/home.html';
+            $scope.fetch = function() {
+            $http({method: $scope.method, url: $scope.url})
+           .success(function(data, status) {
+            console.log("Succesfully Done!...")
+            $scope.status = status;
+           $scope.data = data;
+       })
+         .error(function(data, status) {
+           console.log("failed Plz Try Again..!!!")
+           $scope.status = status;
+           $scope.data = "Request failed";
+    });
+  };
+
+}
+        })
+
+
+        .state('internationalization',{
+            url:'/internationalization',
+            templateUrl:'views/internationalization.html',
+             controller:function($scope){
+          
+               console.log('intenationl Local Lib......... ! !');  
+               $scope.today = new Date();
+               $scope.money = 5000
+    
+  
+            }
+        })
+   
+
+       .state('validation',{
+            url:'/validation',
+            templateUrl:'views/validation.html',
+             controller:function($scope){
+              console.log('validating on Login fucntion. ...! !');        
+            }
+        })
+
+          .state('route2.list', {
+              url: "/list",
+              templateUrl: "views/route2.list.html",
+              controller: function($scope){
+               console.log('Route 2 Entere!');
+                $scope.things = ["A", "Set", "Of", "Things"];
+              }
+          })
+    });
+ // Controllers of App
+  
+    // myapp.controller("Route1Controller",function($scope){
+    //  console.log("ENtered in Route1 Scope");
+    // });
+
+    // myapp.controller("Route2Controler",function($scope){
+    //   console.log("Entered In Route2 section  !");
+    // });
+
+
+  </script>
+
+</body>
+
+</html>
